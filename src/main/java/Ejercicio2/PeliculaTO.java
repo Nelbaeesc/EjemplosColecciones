@@ -29,11 +29,11 @@ public class PeliculaTO {
         return codigo;
     }
 
-    @Override
-    public boolean equals(Object obj){
-        if (!(obj instanceof PeliculaTO))
-            return false;
-        PeliculaTO p = (PeliculaTO) obj;
-        return p.codigo = ;
-    }
+//    @Override
+//    public boolean equals(Object obj){
+//        if (!(obj instanceof PeliculaTO))
+//            return false;
+//        PeliculaTO p = (PeliculaTO) obj;
+//        return p.codigo = ;
+//    }
 }
