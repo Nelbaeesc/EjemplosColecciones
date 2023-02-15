@@ -1,6 +1,6 @@
 package Ejercicio1;
 
-public class Nacionalidad {
+public class Nacionalidad implements Comparable<Nacionalidad>{
 
     private String nombre;
 
@@ -30,5 +30,10 @@ public class Nacionalidad {
         Nacionalidad n = (Nacionalidad) obj;
 
         return n.nombre.compareToIgnoreCase(nombre)==0;
+    }
+
+    @Override
+    public int compareTo(Nacionalidad o) {
+        return nombre.compareToIgnoreCase(o.nombre);
     }
 }

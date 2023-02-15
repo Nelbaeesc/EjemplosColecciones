@@ -6,6 +6,12 @@ import java.util.Map;
 
 public class Empleado implements Comparable<Empleado>{
 
+    public final static Comparator<Empleado> SORT_BY_AGE = new Comparator<Empleado>() {
+        @Override
+        public int compare(Empleado o1, Empleado o2) {
+            return o1.edad - o2.edad;
+        }
+    };
     public final static Comparator<Empleado> SORT_BY_NAME = new Comparator<Empleado>() {
         @Override
         public int compare(Empleado o1, Empleado o2) {
