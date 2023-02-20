@@ -40,8 +40,15 @@ public class Concurso {
         for (Pais p : paises){
             p.votar(paises);
         }
-
+        for (Pais p : paises){
+            Map<Integer,Pais> votos = p.devolverVotos();
+            for (Integer puntuacion : votos.keySet()){
+                Pais pais = votos.get(puntuacion);
+                pais.recibirVoto(puntuacion,p);
+            }
+        }
     }
+
     public List<Pais> obtenerListadoPaisesPorPuntuacion(){
 
     }
