@@ -1,6 +1,7 @@
 package Eurovision;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Concurso {
 
@@ -52,20 +53,30 @@ public class Concurso {
     public List<Pais> obtenerListadoPaisesPorPuntuacion(){
         List<Pais> paisList = new ArrayList<>(paises);
 
-        paisList.sort(Comparator.comparingInt(Pais::obtenerPuntuacion));
+        paisList.sort(Comparator.comparingInt(Pais::obtenerPuntuacion).reversed());
 
         return paisList;
     }
 
-//    public List<Pais> obtenerListadoPaisesAlfabeticamente(){
-//
-//    }
-//    public Map<Pais, Map<Integer,Pais>> obtenerListadoPaisesYPuntuacionesEmitidas(){
-//
-//    }
-//    public List<String> obtenerListadoAlfabeticocantantes(){
-//
-//    }
+    public List<Pais> obtenerListadoPaisesAlfabeticamente(){
+        return paises.stream().sorted().collect(Collectors.toList());
+    }
+
+    public Map<Pais, Map<Integer,Pais>> obtenerListadoPaisesYPuntuacionesEmitidas(){
+        Map<Pais, Map<Integer,Pais>> aux = new TreeMap<>((p1,p2)->p2.obtenerPuntuacion()-p1.obtenerPuntuacion());
+
+        for (Pais p : paises)
+            aux.put(p,p.devolverVotos());
+
+        return aux;
+    }
+
+    public List<String> obtenerListadoAlfabeticoCantantes(){
+        return paises.stream()
+                .map((p) -> p.getCantante())
+                .sorted()
+                .collect(Collectors.toList());
+    }
 
     @Override
     public String toString() {

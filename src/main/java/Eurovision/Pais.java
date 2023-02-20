@@ -51,4 +51,8 @@ public class Pais implements Comparable<Pais>{
         return nombre + "\n" +
                 "Puntuacion: " + puntuacionRecibida;
     }
+
+    public String getCantante() {
+        return cantante;
+    }
 }
