@@ -50,15 +50,27 @@ public class Concurso {
     }
 
     public List<Pais> obtenerListadoPaisesPorPuntuacion(){
+        List<Pais> paisList = new ArrayList<>(paises);
 
+        paisList.sort(Comparator.comparingInt(Pais::obtenerPuntuacion));
+
+        return paisList;
     }
-    public List<Pais> obtenerListadoPaisesAlfabeticamente(){
 
-    }
-    public Map<Pais, Map<Integer,Pais>> obtenerListadoPaisesYPuntuacionesEmitidas(){
+//    public List<Pais> obtenerListadoPaisesAlfabeticamente(){
+//
+//    }
+//    public Map<Pais, Map<Integer,Pais>> obtenerListadoPaisesYPuntuacionesEmitidas(){
+//
+//    }
+//    public List<String> obtenerListadoAlfabeticocantantes(){
+//
+//    }
 
-    }
-    public List<String> obtenerListadoAlfabeticocantantes(){
-
+    @Override
+    public String toString() {
+        return "Concurso{\n " +
+                "paises=\n" + paises +
+                '}';
     }
 }

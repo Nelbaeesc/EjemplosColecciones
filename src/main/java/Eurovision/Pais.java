@@ -45,4 +45,10 @@ public class Pais implements Comparable<Pais>{
     public int compareTo(Pais o) {
         return nombre.compareToIgnoreCase(o.nombre);
     }
+
+    @Override
+    public String toString(){
+        return nombre + "\n" +
+                "Puntuacion: " + puntuacionRecibida;
+    }
 }
