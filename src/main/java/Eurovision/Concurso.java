@@ -1,5 +1,9 @@
 package Eurovision;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,14 +29,28 @@ public class Concurso {
     };
 
     private Set<Pais> paises;
+    private String path;
 
     public Concurso() {
         paises = new TreeSet<>();
 
-        rellenarPaises();
+        rellenarPaises(String path);
     }
 
-    private void rellenarPaises() {
+    public void rellenarPaises(String path) {
+        try(BufferedReader br = new BufferedReader(new FileReader(path));) {
+
+            String linea = "";
+            while ((linea=br.readLine())!=null){
+                paises.add(new Pais(linea.split(";")[0],linea.split(";")[1]));
+            }
+        }catch (FileNotFoundException e){
+            throw new RuntimeException();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
         for (String[] dato : datos )
             paises.add(new Pais(dato[0],dato[1]));
     }
