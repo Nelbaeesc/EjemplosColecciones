@@ -1,8 +1,9 @@
 package Eurovision;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Pais implements Comparable<Pais>{
+public class Pais implements Comparable<Pais>, Serializable {
 
     private static final int[] PUNTOS = {1,2,3,4,5,6,7,8,9,10,12};
     private String cantante;
@@ -54,5 +55,9 @@ public class Pais implements Comparable<Pais>{
 
     public String getCantante() {
         return cantante;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }

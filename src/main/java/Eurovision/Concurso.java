@@ -1,44 +1,40 @@
 package Eurovision;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.imageio.stream.FileImageInputStream;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Concurso {
+public class Concurso implements Serializable{
 
-    private static final String[][] datos = {
-            {"España","El Chiquilicuatre"},
-            {"Alemania","SubanStrujenBajesn"},
-            {"Francia","La Zarra"},
-            {"Italia","Marco Megoni"},
-            {"UK","Los Brexit"},
-            {"Ucrania","Tvorchi"},
-            {"Azerbaiyan","Ekdvje"},
-            {"Croacia","Let 3"},
-            {"Finlandia","Uno cualquiera"},
-            {"Irlanda","Wild Youth"},
-            {"Israel","Noa Kirel"},
-            {"Letonia","Sudden Lights"},
-            {"Malta","The Buster"},
-            {"Noruega","Alessandra"},
-            {"Albania","Albina Redmendi"},
-            {"Armenia","Brunette"},
-    };
+//    private static final String[][] datos = {
+//            {"España","El Chiquilicuatre"},
+//            {"Alemania","SubanStrujenBajesn"},
+//            {"Francia","La Zarra"},
+//            {"Italia","Marco Megoni"},
+//            {"UK","Los Brexit"},
+//            {"Ucrania","Tvorchi"},
+//            {"Azerbaiyan","Ekdvje"},
+//            {"Croacia","Let 3"},
+//            {"Finlandia","Uno cualquiera"},
+//            {"Irlanda","Wild Youth"},
+//            {"Israel","Noa Kirel"},
+//            {"Letonia","Sudden Lights"},
+//            {"Malta","The Buster"},
+//            {"Noruega","Alessandra"},
+//            {"Albania","Albina Redmendi"},
+//            {"Armenia","Brunette"},
+//    };
 
     private Set<Pais> paises;
-    private String path;
 
     public Concurso() {
         paises = new TreeSet<>();
 
-        rellenarPaises(String path);
     }
 
     public void rellenarPaises(String path) {
-        try(BufferedReader br = new BufferedReader(new FileReader(path));) {
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
 
             String linea = "";
             while ((linea=br.readLine())!=null){
@@ -49,10 +45,6 @@ public class Concurso {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-        for (String[] dato : datos )
-            paises.add(new Pais(dato[0],dato[1]));
     }
 
     public void realizarVotaciones(){
@@ -96,10 +88,53 @@ public class Concurso {
                 .collect(Collectors.toList());
     }
 
+    public void imprimirL(String path){
+        imprimir(obtenerListadoPaisesAlfabeticamente(),path,"Listado");
+    }
+
+    private void imprimir(List<Pais> paises, String path, String cabecera){
+        try(PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path)))){
+            pw.println(cabecera);
+            pw.println("-----------------------");
+            for (Pais p : paises)
+                pw.println(p.getNombre());
+        } catch (IOException e){
+            throw new RuntimeException();
+        }
+    }
+
+    public void save(String path){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))){
+            oos.writeObject(this);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void load(String path){
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))){
+
+           Concurso c = (Concurso) ois.readObject();
+           paises = c.paises;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Concurso(String path){
+        load(path);
+    }
+
     @Override
     public String toString() {
         return "Concurso{\n " +
                 "paises=\n" + paises +
                 '}';
     }
+
+
+
 }
